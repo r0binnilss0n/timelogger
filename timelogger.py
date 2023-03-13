@@ -126,7 +126,6 @@ def set_tags(week_string: str | None):
 )
 @click.argument("update", required=False)
 def config(update: str | None):
-    print(update)
     # Makes sure the database it initialized
     db = setup_db_connection(is_setup=True)
     for item in DB_TABLE_SETUP_SQL:

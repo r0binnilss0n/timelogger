@@ -11,28 +11,10 @@ class DateFormat(Enum):
 
 
 def parse_date_string(date_string: str) -> datetime.date:
-    formats = [
-        "%Y/%m/%d",
-        "%Y:%m:%d",
-        "%Y%m%d",
-        "%m/%d",
-        "%m:%d",
-        "%m%d",
-        "%d",
-        "%d",
-        "%d",
-    ]
     if not date_string:
         date_string = ""
     today = datetime.today()
     year = month = day = 0
-
-    # Try parsing the date string using each format
-    # for fmt in formats:
-    #     try:
-    #         parsed_date = datetime.strptime(date_string, fmt)
-    #     except ValueError:
-    #         pass
 
     if "/" in date_string:
         date_components = date_string.split("/")

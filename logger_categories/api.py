@@ -65,7 +65,7 @@ def go_through_and_tag_rows(
 
     for row in rows:
         issue = row.get("issue", None)
-        if issue and tags.get(issue, None):
+        if issue and tags.get(issue, None) or row.get("customer") == "LUNCH":
             continue
 
         print_rows(row_str(row, True, tags))
@@ -122,7 +122,6 @@ def sort_rows_into_days(rows_this_week: Iterator[LoggItem]) -> dict:
 
 def generate_export_data(rows_this_week: Iterator[LoggItem], tags: dict | None) -> None:
     export_settings = get_configuration_by_key("CUSTOMER_CONF")
-    tag_options = {} if not tags else tags.keys()
 
     sorted_rows = sort_rows_into_days(rows_this_week)
 
@@ -137,6 +136,10 @@ def generate_export_data(rows_this_week: Iterator[LoggItem], tags: dict | None) 
         for key in export_settings.keys():
             time_log_categories[key] = timedelta()
 
+        for key, value in tags.items():
+            if not value in time_log_categories.keys():
+                time_log_categories[value] = timedelta()
+    
         for row in day_entries:
             # Makes sure start is the smallest start_time entry
             if new_start := str_to_timdelta(row.get("start_time")) < day_started:
@@ -147,27 +150,14 @@ def generate_export_data(rows_this_week: Iterator[LoggItem], tags: dict | None) 
                 worked += time_spent
 
                 customer = row.get("customer")
-                # print(export_settings)
-                # print(time_log_categories)
                 for category in time_log_categories:
-                    # print(category)
                     if customer in export_settings.get(category, []):
                         time_log_categories[category] += time_spent
                     if customer == category:
                         time_log_categories[category] += time_spent
-
-        #     issue = row.get("issue", None)
-        #     if issue and tag_options:
-        #         if custom_tag := tags.get(issue, None):
-        #             if custom_tag in additional_time_categories.keys():
-        #                 additional_time_categories[custom_tag] += time_spent
-        #             else:
-        #                 additional_time_categories[custom_tag] = time_spent
-
-        # for key_ad in additional_time_categories.keys():
-        #     additional_time_categories[key_ad] = time_str(
-        #         additional_time_categories[key_ad]
-        #     )
+                
+                if tag := tags.get(row.get("issue", "")):
+                    time_log_categories[tag] += time_spent
 
         for category in time_log_categories:
             time_log_categories[category] = time_str(time_log_categories[category])

@@ -51,9 +51,15 @@ the "app" can be accessed directly by just typing `logger ...` in your terminal
   logger list_week 11 (list week 11 in 2023)
   ```
 
-* set_tags      Tag log entries for special export time groups (currently not finished)
+* set_tags      Tag log entries for special export time groups (works but be careful, cant currently remove tag)
 
 * export        Export week of log entries to json format
+  * Accepts dates argument with formats: YYYY:WW, WW (can either be `/` `:`or nothing between year, month and day values)
+  e.g 
+  ```
+  logger export 202310 (export week 10 in 2023)
+  logger export 11 (export week 11 in 2023)
+  ```
 * config        Configure the application settings, can run with config...
 * display_conf  prints current configuration
 * reset         Resets application settings and db

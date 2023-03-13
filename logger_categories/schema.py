@@ -60,8 +60,7 @@ class CategoryItem:
     def list_as_tagging_dict(all_tags: list):
         rows = {}
         for item in all_tags:
-            rows[item.get("name")] = item.get("id")
-
+            rows[f"{item.get('customer')}-{item.get('name')}"] = item.get("id")
         return rows
 
 
@@ -120,6 +119,5 @@ class CategoryTagItem:
     def list_as_customer_dict(all_tags: list):
         rows = {}
         for item in all_tags:
-            rows[item.get("tag")] = item.get("name")
-
+            rows[item.get("tag")] = f"{item.get('customer')}-{item.get('name')}"
         return rows
