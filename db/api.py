@@ -31,7 +31,7 @@ def get_configuration_by_key(key: str) -> Any:
 
 def reset_settings() -> None:
     with shelve.open(CONF_PATH) as shelf:
-        shelf["DATABSE_FILE_LOCATION"] = DATABSE_FILE_LOCATION
+        shelf["DATABASE_FILE_LOCATION"] = DATABSE_FILE_LOCATION
         shelf["CUSTOMER_CONF"] = CUSTOMER_CONF
         shelf["HAS_RUN_CONF"] = HAS_RUN_CONF
 
@@ -44,9 +44,12 @@ def run_new_setup():
                 database_path = ""
                 print_rows(
                     [
+                        "\n----------------------------------------------------------------------",
                         "Not required, but if you want to store the database file"
-                        "outside the application you can enter the path below:"
-                        "(leave empty to use default)"
+                        "outside the application you can enter the FULL path below + :"
+                        "name of the database: eg. User/.../.../db.json",
+                        "(leave empty to use default in db folder)",
+                        "----------------------------------------------------------------------\n",
                     ]
                 )
                 database_path = input("Database-path: ")
@@ -54,9 +57,11 @@ def run_new_setup():
             case "CUSTOMER_CONF":
                 print_rows(
                     [
+                        "\n----------------------------------------------------------------------",
                         "This step is required for the system to be able to properly",
                         "export your logged time. For each category input comma seperated",
                         "list of 'customer-tags' ex. INT = internal, COMP = competence development...",
+                        "----------------------------------------------------------------------\n",
                     ]
                 )
                 customer_confs = {}
