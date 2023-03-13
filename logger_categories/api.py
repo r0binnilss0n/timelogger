@@ -139,7 +139,7 @@ def generate_export_data(rows_this_week: Iterator[LoggItem], tags: dict | None) 
         for key, value in tags.items():
             if not value in time_log_categories.keys():
                 time_log_categories[value] = timedelta()
-    
+
         for row in day_entries:
             # Makes sure start is the smallest start_time entry
             if new_start := str_to_timdelta(row.get("start_time")) < day_started:
@@ -155,7 +155,7 @@ def generate_export_data(rows_this_week: Iterator[LoggItem], tags: dict | None) 
                         time_log_categories[category] += time_spent
                     if customer == category:
                         time_log_categories[category] += time_spent
-                
+
                 if tag := tags.get(row.get("issue", "")):
                     time_log_categories[tag] += time_spent
 
