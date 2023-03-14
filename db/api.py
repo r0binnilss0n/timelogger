@@ -1,9 +1,10 @@
 import shelve
+import pathlib
 from typing import Any
 from db.config import DATABSE_FILE_LOCATION, CUSTOMER_CONF, HAS_RUN_CONF
 from utils.output import print_rows
 
-CONF_PATH = "db/user_configurations.dat"
+CONF_PATH = str(pathlib.Path(__file__).parent.resolve()) + "/user_configurations.dat"
 AVAILABLE_KEYS = ["DATABASE_FILE_LOCATION", "CUSTOMER_CONF", "HAS_RUN_CONF"]
 SETUP_KEYS = ["DATABASE_FILE_LOCATION", "CUSTOMER_CONF"]
 
