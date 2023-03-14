@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS Logger (
   start_time TIME,
   end_time TIME,
   spent TIME,
+  day DATETIME DEFAULT CURRENT_TIMESTAMP,
   date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
   date_updated DATETIME
 );
