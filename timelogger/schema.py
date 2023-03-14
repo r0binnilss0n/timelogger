@@ -14,6 +14,7 @@ class LoggItem:
     id: int | None = None
     end_time: timedelta | None = None
     spent: timedelta | None = None
+    day: datetime | None = None
     date_created: datetime | None = None
     date_updated: datetime | None = None
 
@@ -65,7 +66,7 @@ class LoggItem:
             "spent",
             calc_time_diff(self.start_time, self.end_time) if calc_spent else None,
         )
-        setattr(self, "date_updated", datetime.now())
+        setattr(self, "date_updated", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         data = {}
         for key in columns:
             data[key] = self.get(key)

@@ -10,6 +10,7 @@ ALL_COLUMNS = [
     "start_time",
     "end_time",
     "spent",
+    "day",
     "date_created",
     "date_updated",
 ]

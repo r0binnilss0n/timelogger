@@ -75,7 +75,7 @@ def get_log_item(db: Connector, identifier: str, is_update: bool = False) -> Log
 def get_log_item_for_date(db: Connector, date_string: str) -> Iterator[LoggItem]:
     formatted_date = parse_date_string(date_string)
     qs = db.execute(
-        retrieve_with_rule(LIST_ALL, "date(date_created)", f"date('{formatted_date}')")
+        retrieve_with_rule(LIST_ALL, "date(date_created)", f"date('{formatted_date}')") + " ORDER BY date_created"
     ).fetchall()
     return LoggItem.parse_list(qs, BASIC_COLUMNS)
 
@@ -85,7 +85,7 @@ def get_log_item_for_week(db: Connector, week_string: str) -> Iterator[LoggItem]
     end = start + timedelta(days=6)
 
     qs = db.execute(
-        retrieve_with_between(LIST_ALL, "date(date_created)", start, end)
+        retrieve_with_between(LIST_ALL, "date(date_created)", start, end)  + " ORDER BY date_created"
     ).fetchall()
     return LoggItem.parse_list(qs, ALL_COLUMNS)
 
